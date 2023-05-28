@@ -1,7 +1,8 @@
 var currentQuestion;
 var timeLeft = 10;
 var interval;
-var currentScore;
+var score = 0;
+var highScore = 0;
 
 
 var numberGenerator = function (max) {
@@ -29,6 +30,7 @@ var checkAnswer = function(userAnswer, answer) {
     nextQuestion();
     $('#answer').val('');
     updateTime(1);
+    updateScore(+1)
   }
 }
 
@@ -48,6 +50,8 @@ var startGame = function () {
   if(!interval) {
     if (timeLeft === 0) {
       updateTime(10);
+      updateHighscore()
+      updateScore(-score)
     }
 
     interval = setInterval (function () {
@@ -57,5 +61,17 @@ var startGame = function () {
         interval = undefined; 
       }
     }, 1000)
+  }
+}
+
+var updateScore = function(amount){
+  score += amount;
+  $('#score').text(score)
+}
+
+var updateHighscore = function() {
+  if(score > highScore) {
+    highScore = score;
+    $('#highscore').text(highScore)
   }
 }
